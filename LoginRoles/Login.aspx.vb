@@ -4,8 +4,12 @@ Imports LoginRoles.Models
 Public Class Login
     Inherits System.Web.UI.Page
 
-    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Not IsPostBack Then
+            ' Llamar JS para rellenar si hay un email guardado
+            Dim script As String = $"cargarEmail('{txtEmail.ClientID}','{ckbRecordar.ClientID}');"
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "cargarEmail", script, True)
+        End If
     End Sub
 
 
@@ -49,6 +53,8 @@ Public Class Login
     End Function
 
     Protected Sub btnLogin_Click(sender As Object, e As EventArgs)
+        Dim script As String = $"guardarEmail('{txtEmail.ClientID}','{ckbRecordar.ClientID}');"
+        ScriptManager.RegisterStartupScript(Me, Me.GetType(), Guid.NewGuid().ToString(), script, True)
 
         ' Obtener los valores de los campos de entrada
         Dim usuario As New Usuario() With {
@@ -58,6 +64,7 @@ Public Class Login
 
         ' Validar el usuario
         If VerificarUsuario(usuario) Then
+
             Dim RoleId = Session("RoleId")
             If (RoleId = 1) Then
                 Response.Redirect("Home.aspx")
@@ -65,6 +72,7 @@ Public Class Login
             If (RoleId = 2) Then
                 Response.Redirect("Admin.aspx")
             End If
+
         Else
 
             lblError.Text = "Correo electrónico o contraseña inválidos."
@@ -72,4 +80,6 @@ Public Class Login
         End If
     End Sub
 
+    Protected Sub ckbRecordar_CheckedChanged(sender As Object, e As EventArgs)
+    End Sub
 End Class

@@ -5,11 +5,13 @@
         If Session("UsuarioId") Is Nothing Then
             Response.Redirect("Login.aspx")
         End If
+
         If Session("RoleId") Is Nothing Then
             Response.Redirect("Login.aspx")
         ElseIf Session("RoleId") <> 2 Then
             Response.Redirect("Home.aspx")
         End If
+
     End Sub
 
 End Class

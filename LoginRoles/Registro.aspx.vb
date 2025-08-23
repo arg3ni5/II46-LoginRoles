@@ -23,6 +23,10 @@ Public Class Registro
     End Function
 
     Protected Sub btnRegistrar_Click(sender As Object, e As EventArgs)
+        Dim js As String = "alert('test');"
+        ' Usa Page como control y una key única para asegurar que siempre se ejecute
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), js, True)
+
         ' Obtener los valores de los campos
         Dim email As String = txtEmail.Text
         Dim nombre As String = txtNombre.Text
@@ -65,4 +69,15 @@ Public Class Registro
             lblError.Visible = True
         End If
     End Sub
+
+    ' MasterPage: Site.master.vb
+
+    Protected Sub Prueba_Click(sender As Object, e As EventArgs) Handles Prueba.Click
+        Dim js As String = "alert('test');"
+        ' Usa Page como control y una key única para asegurar que siempre se ejecute
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), Guid.NewGuid().ToString(), js, True)
+    End Sub
+
+
+
 End Class

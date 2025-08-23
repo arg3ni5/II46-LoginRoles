@@ -31,5 +31,8 @@
         <a href="Login.aspx">¿Ya estas registrado?</a>
     </div>
     <asp:Label ID="lblError" runat="server" Text="" CssClass="error"></asp:Label>
+
+    <asp:Button ID="Prueba" runat="server" Text="Probar" OnClick="Prueba_Click" />
+
 </asp:Content>
 

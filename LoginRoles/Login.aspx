@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Login.aspx.vb" Inherits="LoginRoles.Login" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="Login.aspx.vb" Inherits="LoginRoles.Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="center-page">
@@ -18,10 +18,7 @@
                     </div>
 
                     <div class="form-check text-start my-3">
-                        <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Recordar
-                        </label>
+                        <asp:CheckBox ID="ckbRecordar" runat="server" OnCheckedChanged="ckbRecordar_CheckedChanged" CssClass="form-check-label" Text="Recordar"/>
                     </div>
                     <asp:Button CssClass="btn btn-primary w-100 py-2" ID="btnLogin" runat="server" Text="Acceder" OnClick="btnLogin_Click" />
                 </main>
@@ -31,4 +28,26 @@
 
         </div>
     </div>
+    <script>
+        function guardarEmail(emailId, recordarId) {
+            var email = document.getElementById(emailId).value.trim();
+            var cb = document.getElementById(recordarId);
+
+            console.log(email, cb.checked)
+            if (cb && cb.checked) {
+                localStorage.setItem('login.email', email);
+            } else {
+                localStorage.removeItem('login.email');
+            }
+        }
+
+        function cargarEmail(emailId, recordarId) {
+            var saved = localStorage.getItem('login.email');
+            if (saved) {
+                document.getElementById(emailId).value = saved;
+                var cb = document.getElementById(recordarId);
+                if (cb) cb.checked = true;
+            }
+        }
+    </script>
 </asp:Content>
