@@ -9,6 +9,9 @@ Public Class Login
             ' Llamar JS para rellenar si hay un email guardado
             Dim script As String = $"cargarEmail('{txtEmail.ClientID}','{ckbRecordar.ClientID}');"
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "cargarEmail", script, True)
+
+            ' Ejecutar guardarEmail en el cliente cuando el usuario pulse Acceder
+            btnLogin.OnClientClick = $"guardarEmail('{txtEmail.ClientID}','{ckbRecordar.ClientID}');"
         End If
     End Sub
 
@@ -53,9 +56,6 @@ Public Class Login
     End Function
 
     Protected Sub btnLogin_Click(sender As Object, e As EventArgs)
-        Dim script As String = $"guardarEmail('{txtEmail.ClientID}','{ckbRecordar.ClientID}');"
-        ScriptManager.RegisterStartupScript(Me, Me.GetType(), Guid.NewGuid().ToString(), script, True)
-
         ' Obtener los valores de los campos de entrada
         Dim usuario As New Usuario() With {
             .Email = txtEmail.Text,
